@@ -1,0 +1,413 @@
+.folders-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.folders-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.folders-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #2d3748;
+    font-weight: 700;
+}
+
+.btn-icon-small {
+    background: #0ea5e9;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-icon-small:hover {
+    background: #0284c7;
+    transform: scale(1.05);
+}
+
+/* Search Box */
+.folder-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.folder-search:focus-within {
+    border-color: #0ea5e9;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.folder-search svg {
+    color: #718096;
+    flex-shrink: 0;
+}
+
+.folder-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    flex: 1;
+    font-size: 0.875rem;
+    color: #2d3748;
+    font-family: inherit;
+}
+
+.folder-search input::placeholder {
+    color: #a0aec0;
+}
+
+/* Add Folder Form */
+.add-folder-form {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: #f7fafc;
+    border-radius: 8px;
+    border: 2px dashed #cbd5e0;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.add-folder-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.add-folder-form input:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+/* Folder Section */
+.folder-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.folder-section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #f7fafc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.folder-section-header:hover {
+    background: #edf2f7;
+}
+
+.folder-section-header svg {
+    color: #4a5568;
+    flex-shrink: 0;
+}
+
+.folder-section-header span {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.section-count {
+    margin-left: auto;
+    background: #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    color: #4a5568;
+}
+
+/* Folders List */
+.folders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 8px;
+}
+
+/* Folder Item */
+.folder-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.folder-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: currentColor;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.folder-item:hover {
+    background: #f7fafc;
+    transform: translateX(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.folder-item:hover::before {
+    transform: scaleY(1);
+}
+
+.folder-item.dragover {
+    background: linear-gradient(135deg, #0ea5e915 0%, #48bb7815 100%);
+    border-left-color: currentColor;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.2);
+    transform: scale(1.02);
+}
+
+.folder-item.dragover::after {
+    content: "إسقاط هنا";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0ea5e9;
+    background: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Folder Icon */
+.folder-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: currentColor;
+    opacity: 0.1;
+    transition: all 0.3s ease;
+}
+
+.folder-item:hover .folder-icon {
+    opacity: 0.15;
+    transform: scale(1.1);
+}
+
+.folder-icon svg {
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+}
+
+/* Folder Info */
+.folder-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.folder-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #2d3748;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.folder-description {
+    font-size: 0.75rem;
+    color: #718096;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+/* Folder Count Badge */
+.folder-count {
+    flex-shrink: 0;
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0 8px;
+    transition: all 0.3s ease;
+}
+
+.folder-item:hover .folder-count {
+    transform: scale(1.1);
+}
+
+/* Empty Message */
+.empty-message {
+    padding: 20px;
+    text-align: center;
+    color: #a0aec0;
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+/* Folder Stats */
+.folder-stats {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 2px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: linear-gradient(135deg, #0ea5e910 0%, #48bb7810 100%);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+    background: linear-gradient(135deg, #0ea5e920 0%, #48bb7820 100%);
+    transform: translateX(-2px);
+}
+
+.stat-item span {
+    font-size: 0.8125rem;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.stat-item strong {
+    font-size: 1.125rem;
+    color: #0ea5e9;
+    font-weight: 700;
+}
+
+/* Scrollbar Styling */
+.folders-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.folders-panel::-webkit-scrollbar-track {
+    background: #f7fafc;
+    border-radius: 10px;
+}
+
+.folders-panel::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.folders-panel::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .folders-panel {
+        position: relative;
+        top: 0;
+        max-height: 400px;
+    }
+
+    .folder-item {
+        padding: 10px 12px;
+    }
+
+    .folder-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .folder-name {
+        font-size: 0.875rem;
+    }
+
+    .folder-description {
+        display: none;
+    }
+}
+
+/* Animation for new folders */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.folder-item {
+    animation: fadeInUp 0.3s ease;
+}

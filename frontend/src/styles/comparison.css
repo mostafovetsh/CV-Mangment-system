@@ -1,0 +1,114 @@
+.comparison-modal {
+  max-width: 95vw;
+  width: 1200px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.comparison-table-container {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  text-align: right;
+  vertical-align: top;
+}
+
+.comparison-table th {
+  background-color: #f7fafc;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.comparison-table th:first-child {
+  background-color: #edf2f7;
+  z-index: 20;
+  left: 0;
+  position: sticky;
+}
+
+.comparison-table td:first-child {
+  background-color: #f7fafc;
+  font-weight: 600;
+  position: sticky;
+  left: 0;
+  z-index: 10;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.rating-stars span {
+  transition: color 0.2s;
+}
+
+.rating-stars span:hover {
+  color: #ecc94b !important;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill-tag {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-new {
+  background-color: #ebf8ff;
+  color: #2b6cb0;
+}
+
+.status-reviewing {
+  background-color: #fefcbf;
+  color: #b7791f;
+}
+
+.status-interviewed {
+  background-color: #e6fffa;
+  color: #2c7a7b;
+}
+
+.status-shortlisted {
+  background-color: #faf5ff;
+  color: #553c9a;
+}
+
+.status-hired {
+  background-color: #c6f6d5;
+  color: #276749;
+}
+
+.status-rejected {
+  background-color: #fed7d7;
+  color: #9b2c2c;
+}

@@ -1,0 +1,9 @@
+.bulkupload-overlay{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;z-index:2000}
+.bulkupload-modal{width:900px;max-width:95%;background:#fff;border-radius:6px;padding:12px;box-shadow:0 6px 24px rgba(0,0,0,0.2)}
+.bulkupload-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.bulkupload-body{max-height:70vh;overflow:auto}
+.bulkupload-table{width:100%;border-collapse:collapse}
+.bulkupload-table th,.bulkupload-table td{border:1px solid #ececec;padding:6px;text-align:left}
+.btn{padding:6px 10px;border-radius:4px;border:1px solid #cfcfcf;background:#f7f7f7;cursor:pointer}
+.btn-primary{background:#007bff;color:#fff;border-color:#007bff}
+.btn-secondary{background:#e9ecef;color:#000}
