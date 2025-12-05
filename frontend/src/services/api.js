@@ -1,4 +1,6 @@
-﻿const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+﻿// In production (Render), use relative path since backend serves frontend
+// In development, use localhost with proxy from package.json
+const API_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001/api');
 
 // Fetch all CVs with optional filters
 export const fetchCVs = async (filters = {}) => {
