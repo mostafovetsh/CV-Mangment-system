@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  cv-management:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - HOST=0.0.0.0
+      - CORS_ORIGIN=*
+      - DB_PATH=./database.json
+      - UPLOAD_DIR=./uploads
+      - MAX_FILE_SIZE=10485760
+    volumes:
+      # Persist uploads and database in development
+      - ./backend/uploads:/app/uploads
+      - ./backend/database.json:/app/database.json
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/api/config"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

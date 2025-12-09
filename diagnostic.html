@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Render Deployment Diagnostic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .test-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .test-item .status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .status.loading {
+            background: #ffc107;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .status.success {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .status.error {
+            background: #f44336;
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .test-item .label {
+            flex: 1;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .test-item .result {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .log-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .log-line {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        
+        .log-error {
+            color: #f48771;
+        }
+        
+        .log-success {
+            color: #89d185;
+        }
+        
+        .log-info {
+            color: #6cb6ff;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h3 {
+            color: #1976d2;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .info-box p {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .url-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .url-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Render Deployment Diagnostic</h1>
+            <p>Test your CV Management System deployment</p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <h3>📋 Instructions</h3>
+                <p>Enter your Render deployment URL below and click "Run Tests" to diagnose any issues with your deployment.</p>
+            </div>
+            
+            <input type="text" 
+                   class="url-input" 
+                   id="baseUrl" 
+                   placeholder="https://your-app.onrender.com"
+                   value="">
+            
+            <div class="actions">
+                <button onclick="runTests()">🚀 Run Tests</button>
+                <button onclick="clearLogs()">🗑️ Clear Logs</button>
+            </div>
+            
+            <div class="test-section">
+                <h2>🌐 Connectivity Tests</h2>
+                <div class="test-item" id="test-frontend">
+                    <div class="status loading">⏳</div>
+                    <div class="label">Frontend Loading</div>
+                    <div class="result" id="result-frontend">Waiting...</div>
+                </div>
+                <div class="test-item" id="test-api">
+                    <div class="status loading">⏳</div>
+                    <div class="label">API Endpoint (/api/stats)</div>
+                    <div class="result" id="result-api">Waiting...</div>
+                </div>
+                <div class="test-item" id="test-config">
+                    <div class="status loading">⏳</div>
+                    <div class="label">Configuration (/api/config)</div>
+                    <div class="result" id="result-config">Waiting...</div>
+                </div>
+                <div class="test-item" id="test-cors">
+                    <div class="status loading">⏳</div>
+                    <div class="label">CORS Configuration</div>
+                    <div class="result" id="result-cors">Waiting...</div>
+                </div>
+            </div>
+            
+            <div class="test-section">
+                <h2>📊 Diagnostic Logs</h2>
+                <div class="log-box" id="logBox">
+                    <div class="log-line log-info">Ready to run diagnostics...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function log(message, type = 'info') {
+            const logBox = document.getElementById('logBox');
+            const timestamp = new Date().toLocaleTimeString();
+            const logLine = document.createElement('div');
+            logLine.className = `log-line log-${type}`;
+            logLine.textContent = `[${timestamp}] ${message}`;
+            logBox.appendChild(logLine);
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+        
+        function updateTest(testId, status, result) {
+            const testItem = document.getElementById(`test-${testId}`);
+            const statusEl = testItem.querySelector('.status');
+            const resultEl = document.getElementById(`result-${testId}`);
+            
+            statusEl.className = `status ${status}`;
+            if (status === 'success') {
+                statusEl.textContent = '✓';
+            } else if (status === 'error') {
+                statusEl.textContent = '✗';
+            } else {
+                statusEl.textContent = '⏳';
+            }
+            
+            resultEl.textContent = result;
+        }
+        
+        function clearLogs() {
+            document.getElementById('logBox').innerHTML = '<div class="log-line log-info">Logs cleared.</div>';
+        }
+        
+        async function testFrontend(baseUrl) {
+            log('Testing frontend...', 'info');
+            try {
+                const response = await fetch(baseUrl, { method: 'GET' });
+                if (response.ok) {
+                    const html = await response.text();
+                    if (html.includes('<!DOCTYPE html>') || html.includes('<html')) {
+                        updateTest('frontend', 'success', 'HTML loaded successfully');
+                        log('✓ Frontend is serving HTML correctly', 'success');
+                        return true;
+                    } else {
+                        updateTest('frontend', 'error', 'Invalid HTML response');
+                        log('✗ Frontend returned invalid HTML', 'error');
+                        return false;
+                    }
+                } else {
+                    updateTest('frontend', 'error', `HTTP ${response.status}`);
+                    log(`✗ Frontend returned status ${response.status}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                updateTest('frontend', 'error', error.message);
+                log(`✗ Frontend test failed: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        async function testAPI(baseUrl) {
+            log('Testing API endpoint /api/stats...', 'info');
+            try {
+                const response = await fetch(`${baseUrl}/api/stats`, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        updateTest('api', 'success', `${data.stats.totalCVs} CVs found`);
+                        log(`✓ API is working! Total CVs: ${data.stats.totalCVs}`, 'success');
+                        return true;
+                    } else {
+                        updateTest('api', 'error', 'Invalid response format');
+                        log('✗ API returned invalid format', 'error');
+                        return false;
+                    }
+                } else {
+                    updateTest('api', 'error', `HTTP ${response.status}`);
+                    log(`✗ API returned status ${response.status}`, 'error');
+                    log(`Response: ${await response.text()}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                updateTest('api', 'error', error.message);
+                log(`✗ API test failed: ${error.message}`, 'error');
+                log('This usually means the backend is not running or not accessible', 'error');
+                return false;
+            }
+        }
+        
+        async function testConfig(baseUrl) {
+            log('Testing configuration endpoint...', 'info');
+            try {
+                const response = await fetch(`${baseUrl}/api/config`, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    updateTest('config', 'success', 'Config loaded');
+                    log('✓ Configuration endpoint is working', 'success');
+                    log(`Departments: ${data.departmentCategories?.length || 0}`, 'info');
+                    return true;
+                } else {
+                    updateTest('config', 'error', `HTTP ${response.status}`);
+                    log(`✗ Config endpoint returned status ${response.status}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                updateTest('config', 'error', error.message);
+                log(`✗ Config test failed: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        async function testCORS(baseUrl) {
+            log('Testing CORS configuration...', 'info');
+            try {
+                const response = await fetch(`${baseUrl}/api/stats`, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                const corsHeader = response.headers.get('Access-Control-Allow-Origin');
+                if (corsHeader) {
+                    updateTest('cors', 'success', `CORS: ${corsHeader}`);
+                    log(`✓ CORS is configured: ${corsHeader}`, 'success');
+                    return true;
+                } else {
+                    updateTest('cors', 'error', 'No CORS headers');
+                    log('⚠ CORS headers not found (might still work)', 'error');
+                    return false;
+                }
+            } catch (error) {
+                updateTest('cors', 'error', error.message);
+                log(`✗ CORS test failed: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        async function runTests() {
+            const baseUrl = document.getElementById('baseUrl').value.trim();
+            
+            if (!baseUrl) {
+                alert('Please enter your Render deployment URL');
+                return;
+            }
+            
+            // Remove trailing slash
+            const cleanUrl = baseUrl.replace(/\/$/, '');
+            
+            clearLogs();
+            log('Starting diagnostic tests...', 'info');
+            log(`Target URL: ${cleanUrl}`, 'info');
+            log('─'.repeat(50), 'info');
+            
+            // Reset all tests
+            ['frontend', 'api', 'config', 'cors'].forEach(test => {
+                updateTest(test, 'loading', 'Testing...');
+            });
+            
+            // Run tests sequentially
+            const frontendOk = await testFrontend(cleanUrl);
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            const apiOk = await testAPI(cleanUrl);
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            const configOk = await testConfig(cleanUrl);
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            const corsOk = await testCORS(cleanUrl);
+            
+            // Summary
+            log('─'.repeat(50), 'info');
+            const allPassed = frontendOk && apiOk && configOk;
+            if (allPassed) {
+                log('🎉 All critical tests passed! Your deployment looks good.', 'success');
+            } else {
+                log('⚠ Some tests failed. Check the errors above.', 'error');
+                
+                if (!frontendOk) {
+                    log('→ Frontend issue: Check Render build logs', 'error');
+                }
+                if (!apiOk) {
+                    log('→ Backend issue: Check if server is running and PORT is configured', 'error');
+                }
+                if (!configOk) {
+                    log('→ Configuration issue: Check backend routes', 'error');
+                }
+            }
+        }
+        
+        // Auto-detect current URL if running on Render
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                const currentUrl = `${window.location.protocol}//${window.location.host}`;
+                document.getElementById('baseUrl').value = currentUrl;
+                log(`Auto-detected URL: ${currentUrl}`, 'info');
+            }
+        });
+    </script>
+</body>
+</html>

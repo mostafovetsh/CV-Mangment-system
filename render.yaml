@@ -1,14 +1,16 @@
 services:
   - type: web
     name: cv-management-system
-    env: node
+    env: docker
     region: oregon
     plan: free
-    buildCommand: npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend
-    startCommand: npm start --prefix backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        sync: false
       - key: HOST
         value: 0.0.0.0
       - key: CORS_ORIGIN

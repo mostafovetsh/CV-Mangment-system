@@ -21,31 +21,6 @@
       "textContent": "\n\nFinger Print\n10 point\nvlan : class\nNetworkID: 10.0.2.0\n11 PC point\n3 Access\nvlan : manmgment\nNetworkID: 10.0.1.0\n4 PC point\n1 Printer\n1 access\nvlan : class\nNetworkID: 10.0.0.0\n7 PC point\nvlan : class\nNetworkID: 10.0.2.0\n9 point\nvlan : class\nNetworkID: 10.0.2.0\n2 point\nvlan : manmgment\nNetworkID: 10.0.0.0\n12 point\nvlan : class\nNetworkID: 10.0.2.0\n1 point\nvlan : manmgment\nNetworkID: 10.0.0.0\n12 point\nvlan : class\nNetworkID: 10.0.2.0\nLev 3.\nLev 4.\nLev 5.\nLev 2.\nLev 1.\nSW. 0\nSW. 1\nSW. 2\nSW. 3\nSW. 4\nSW. 5\nSW. root\n2 hup \n3 hup \n4 hup point\n11 point\n1 printer\n1 Finger \nvlan : manmgment\nNetworkID: 10.0.1.0\n2 point\nvlan : class\nNetworkID: 10.0.2.0\nLev0\n4 hup \n2\n1\nWE\nvoda\n    -  Workstation z600 \n    - Ram16 \n    - Hdd 500\n    - Nic : 1 Lan 1 Wan\n    - Esxi 6.5\n---------------------------\n     - Firewall Mikrotik\n     -   Adc\n \n  -  Workstation Z800 \n   - Ram 24 \n   - HDD 2 TP\n   - Nic : 1 lan 1 wan\n   - Esxi 6.5\n--------------------------\n    - DC\n    -  AD          VM\n    -DNS\n--------------------------\n    - BackUp  VM\n4 access\n4 access\n4 access\n4 access\nOut Of Service\n 7 failure Point \nOut Of Service\nFajr Network Digram\nprinter\nmain switch\nswitch\naccess point\nKey Feature\n4 access\n4 access\nNetwork Point Summary\nTotal: 121 points\nUnused Points: 23\nHup Connections: 13 points\nDirect/Random Connections: 8 points\nOut of Service: 11 points\ntechnical problems",
       "uploadDate": "2025-11-25T20:57:59.555Z",
       "updatedAt": "2025-11-25T20:59:09.730Z"
-    },
-    {
-      "id": "1764601097171",
-      "status": "new",
-      "candidateName": "( اليوم الأول (",
-      "email": "",
-      "phone": "10.0.0.74",
-      "notes": "",
-      "skills": [
-        "سنيور",
-        "go"
-      ],
-      "folder": "general",
-      "age": "",
-      "experienceYears": "",
-      "education": [],
-      "languages": [],
-      "fileName": "________________________________-1764601097088-947437037.docx",
-      "originalName": "ØªÙØ±ÙØ± Ø§ÙÙÙÙ Ø§ÙØ£ÙÙ.docx",
-      "filePath": "uploads\\general\\________________________________-1764601097088-947437037.docx",
-      "fileSize": 16941,
-      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "fileUrl": "/uploads/general/________________________________-1764601097088-947437037.docx",
-      "textContent": "تقرير عن حركه الإنترنت الموجهه\n\n( اليوم الأول (\n\n\n\nالبيان\n\nالتفاصيل\n\nالجهاز المُراقب\n\n10.0.0.74\n\nتاريخ التحليل\n\nيوليو 2025\n\nإجمالي عناوين IP\n\n83 عنوان \n\nفترة المراقبة\n\nجلسة واحدة\n\nنوع التحليل\n\nتحليل حركة الشبكة\n\n-----------------------------------------\n\n   تصنيف المواقع Website Classification\n\n     خدمات مايكروسوفت Microsoft Services (65% \n\n     خدمات فيسبوك/ميتا Facebook/Meta Services (10% \n\n      خدمات جوجل  Google Services (5% \n\n       شبكات توصيل المحتوى  CDN Services (20% \n\n\n\n🔒 التحليل الأمني / Security Analysis\n\nفحص المحتوى الإباحي / Adult Content Check  \n\nمواقع إباحية: ❌ لا يوجد\n\nمحتوى للبالغين: ❌ لا يوجد\n\nمواقع مشبوهة: ❌ لا يوجد\n\nقوائم سوداء: ❌ لا يوجد\n\nفحص VPN والخصوصية  / VPN & Privacy Check\n\nتوزيع الاستخدام:\n\nخدمات العمل (65%): Microsoft Office, Teams, Outlook\n\nشبكات التوصيل (20%): CDN للمواقع العادية\n\nوسائل التواصل (10%): Facebook, Instagram, WhatsApp\n\nالبحث والإيميل (5%): Google services\n\n📋 الخلاصة التنفيذية / Executive Summary\n\nالنتيجة النهائية: 🟢 آمن بالكامل\n\nالجهاز 10.0.0.74 يظهر نمط استخدام طبيعي وآمن للإنترنت. تم فحص 83 عنوان IP ولم يتم العثور على أي محتوى إباحي أو مواقع ضارة أو استخدام لخدمات VPN أو أي أنشطة مشبوهة.\n\n🔍 تفاصيل تقنية / Technical Details\n\nطريقة التحليل: تحليل DNS queries و IP connections أدوات المراقبة: Wireshark network analysis معدل الدقة: 99.5% (تم فحص جميع العناوين) معايير الأمان: اتباع أفضل الممارسات الأمنية\n\n\n\n\n\n",
-      "uploadDate": "2025-12-01T14:58:17.171Z"
     }
   ],
   "folders": [
@@ -66,6 +41,7 @@
     "مصطفى نور الدين",
     "sdfdsf",
     "تيست",
-    "مهنه جديده"
+    "مهنه جديده",
+    "ملف جديد"
   ]
 }

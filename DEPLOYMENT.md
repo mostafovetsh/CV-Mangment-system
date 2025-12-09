@@ -39,6 +39,7 @@
 
 4. **Add Environment Variables** (in Render dashboard)
    - `NODE_ENV` = `production`
+   - `PORT` = (leave empty - Render auto-assigns)
    - `HOST` = `0.0.0.0`
    - `CORS_ORIGIN` = `*`
    - `DB_PATH` = `./database.json`

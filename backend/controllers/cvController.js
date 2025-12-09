@@ -929,14 +929,61 @@ exports.bulkMove = async (req, res) => {
       return res.status(400).json({ success: false, error: 'Folder required' });
     }
 
+    const path = require('path');
+    const newFolderPath = path.join('uploads', folder);
+
+    // Create new folder if it doesn't exist
+    if (!fs.existsSync(newFolderPath)) {
+      fs.mkdirSync(newFolderPath, { recursive: true });
+    }
+
     const results = [];
     for (const id of ids) {
       try {
-        const updatedCV = db.updateCV(id, { folder });
+        const cv = db.getCVById(id);
+        if (!cv) {
+          results.push({ id, success: false, error: 'CV not found' });
+          continue;
+        }
+
+        // Prepare updates object
+        const updates = { folder };
+
+        // Handle file movement if CV has a file and folder is changing
+        if (cv.folder !== folder && cv.filePath && fs.existsSync(cv.filePath)) {
+          const oldPath = cv.filePath;
+          const fileName = cv.fileName;
+          const newPath = path.join(newFolderPath, fileName);
+
+          // Move the file
+          try {
+            fs.renameSync(oldPath, newPath);
+            updates.filePath = newPath;
+            updates.fileUrl = `/uploads/${folder}/${fileName}`;
+            console.log(`Moved file from ${oldPath} to ${newPath}`);
+          } catch (err) {
+            console.error('Error moving file:', err);
+            // If move fails, try copy and delete
+            try {
+              fs.copyFileSync(oldPath, newPath);
+              fs.unlinkSync(oldPath);
+              updates.filePath = newPath;
+              updates.fileUrl = `/uploads/${folder}/${fileName}`;
+              console.log(`Copied and deleted file from ${oldPath} to ${newPath}`);
+            } catch (err2) {
+              console.error('Error copying file:', err2);
+              results.push({ id, success: false, error: `Failed to move file: ${err2.message}` });
+              continue;
+            }
+          }
+        }
+
+        // Update CV in database
+        const updatedCV = db.updateCV(id, updates);
         if (updatedCV) {
           results.push({ id, success: true, cv: updatedCV });
         } else {
-          results.push({ id, success: false, error: 'CV not found' });
+          results.push({ id, success: false, error: 'Failed to update CV' });
         }
       } catch (error) {
         results.push({ id, success: false, error: error.message });
